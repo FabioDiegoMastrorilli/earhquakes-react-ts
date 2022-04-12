@@ -1,32 +1,28 @@
-import { useAppDispatch, useAppSelector } from './app/hooks';
+import { useAppDispatch, useAppSelector } from "./app/hooks";
 
-import Form from './components/Form';
-import List from './components/Table';
-import { useEffect } from 'react';
-import { fetchEarthquakes } from './slices/earthquakes';
+import Form from "./components/Form";
+import List from "./components/Table";
+import { useEffect } from "react";
+import { fetchEarthquakes } from "./slices/earthquakes";
 
 function App() {
-  const {status} = useAppSelector((state) => state.earthquakes);
+  const { status } = useAppSelector((state) => state.earthquakes);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-      dispatch(fetchEarthquakes());
-  }, [dispatch])
+    dispatch(fetchEarthquakes());
+  }, [dispatch]);
 
   return (
     <>
-          <Form />
+      <Form />
 
-          {status === 'failed' && (
-            <>failed</>
-          )}
+      {status === "failed" && <>failed</>}
 
-          {status === 'loading' && (
-            <>loading</>
-          )}
+      {status === "loading" && <>loading</>}
 
-          {<List />}
-          </>
+      {<List />}
+    </>
   );
 }
 

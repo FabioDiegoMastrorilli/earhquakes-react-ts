@@ -1,5 +1,5 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import earthquakesReducer from '../slices/earthquakes';
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import earthquakesReducer from "../slices/earthquakes";
 
 export const store = configureStore({
   reducer: {
