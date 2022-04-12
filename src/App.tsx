@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from "./app/hooks";
-
 import Form from "./components/Form";
 import List from "./components/Table";
 import { useEffect } from "react";
