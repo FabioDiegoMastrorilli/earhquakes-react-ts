@@ -3,6 +3,7 @@ import {
   getData,
   defaultQueryParams,
   baseURL,
+  DEFAULT_PAGE_SIZE,
 } from "./earthquakesAPI";
 import { EarthquakeType } from "../slices/earthquakes.types";
 
@@ -41,13 +42,13 @@ const EarthquakeBoilerplate: EarthquakeType = {
 describe("earthquakesAPI", () => {
   describe("buildURL", () => {
     it("must contain the baseURL", () => {
-      const url = new URL(buildURL());
+      const url = new URL(buildURL(DEFAULT_PAGE_SIZE));
 
       expect(url.pathname).toBe(baseURL);
     });
 
     it("must contain the search Params", () => {
-      const url = new URL(buildURL());
+      const url = new URL(buildURL(DEFAULT_PAGE_SIZE));
 
       const searchParams = Array.from(url.searchParams.keys());
 

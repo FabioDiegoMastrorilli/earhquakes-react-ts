@@ -11,13 +11,12 @@ export const DEFAULT_PAGE_SIZE = 500;
 export const defaultQueryParams = {
   eventtype: "earthquake",
   format: "geojson",
-  limit: String(DEFAULT_PAGE_SIZE),
 };
 
-export function buildURL() {
+export function buildURL(pageSize: number) {
   const url = new URL(baseURL, window.location.origin);
 
-  url.searchParams.set("limit", String(DEFAULT_PAGE_SIZE));
+  url.searchParams.set("limit", String(pageSize));
 
   Object.entries(defaultQueryParams).forEach(([name, value]) => {
     if (value) {
@@ -29,14 +28,20 @@ export function buildURL() {
 }
 
 export async function getData() {
-  const formattedURL = buildURL();
+  /**
+   * No try/catch since the Promise rejection will be gracefully handled by
+   * the extraReducers builder in earthquakesSlice.
+   */
+
+  const formattedURL = buildURL(DEFAULT_PAGE_SIZE);
+  // const formattedURL = buildURL(20001); // to test a scenario where !response.ok
 
   const response = await fetch(formattedURL);
 
   if (!response.ok) {
-    const newError = await response.json();
+    const error = await response.text();
 
-    throw newError;
+    throw new Error(error);
   }
 
   const parsedResponse = (await response.json()) as JsonResponse;

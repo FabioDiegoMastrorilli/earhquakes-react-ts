@@ -48,14 +48,16 @@ export type MultiRangeFilterValueType =
   | null;
 
 export type MultiRangeFilterType = {
-  type: "multiRange";
+  label?: string;
   matchKey: KeyOfType<EarthquakePropsType, number>;
+  type: "multiRange";
   value?: MultiRangeFilterValueType;
 };
 
 export type SelectFilterType = {
-  type: "select";
+  label?: string;
   matchKey: KeyOfType<EarthquakePropsType, string>;
+  type: "select";
   value?: string | null;
 };
 

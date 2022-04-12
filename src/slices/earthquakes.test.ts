@@ -14,6 +14,7 @@ describe("earthquakes reducer", () => {
 
   it("must update filters values - MultiRange", () => {
     const expectedFilter: MultiRangeFilterType = {
+      label: "Magnitude",
       matchKey: "mag",
       type: "multiRange",
       value: [
@@ -32,6 +33,7 @@ describe("earthquakes reducer", () => {
       initialState,
       setFilterValue(expectedFilter)
     );
+
     const updated = actual.filters.find((filter) => filter.matchKey === "mag");
 
     expect(updated).toEqual(expectedFilter);
@@ -48,6 +50,7 @@ describe("earthquakes reducer", () => {
       initialState,
       setFilterValue(expectedFilter)
     );
+
     const updated = actual.filters.find(
       (filter) => filter.matchKey === "magType"
     );

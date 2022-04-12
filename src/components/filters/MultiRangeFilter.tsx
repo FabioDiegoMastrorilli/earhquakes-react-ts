@@ -12,6 +12,7 @@ import { Label } from "reactstrap";
 import "rc-slider/assets/index.css";
 
 export default function MultiRangeFilter({
+  label,
   matchKey,
   type,
   value,
@@ -33,7 +34,7 @@ export default function MultiRangeFilter({
   return (
     <>
       <Label id={labelId} className="mb-3 pb-1">
-        {matchKey}
+        {label || matchKey}
       </Label>
 
       <Slider

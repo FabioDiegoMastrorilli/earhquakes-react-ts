@@ -6,6 +6,7 @@ export const initialState: EarthquakesStateType = {
   items: null,
   filters: [
     {
+      label: "Magnitude",
       type: "multiRange",
       matchKey: "mag",
     },
@@ -13,6 +14,27 @@ export const initialState: EarthquakesStateType = {
       type: "select",
       matchKey: "magType",
     },
+
+    /**
+     * Filters were built to be extensible based on EarthquakePropsType
+     *
+     * SelectFilterType expects 'matchKey' to be a key of EarthquakePropsType where its value type is a string.
+     * <SelectFilter> will collect all the strings to generate the select options.
+     *
+     * MultiRangeFilterType expects 'matchKey' to be a key of EarthquakePropsType where its value type is a number.
+     * <MultiRangeFilter> will collect all the numbers to generate the domain range.
+     *
+     * Uncomment the following lines to add more filters.
+     */
+
+    // {
+    //   type: "select",
+    //   matchKey: 'status'
+    // },
+    // {
+    //   type: "multiRange",
+    //   matchKey: 'time'
+    // }
   ],
   status: "idle",
 };
@@ -44,13 +66,15 @@ export const earthquakesSlice = createSlice({
       .addCase(fetchEarthquakes.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchEarthquakes.rejected, (state) => {
+      .addCase(fetchEarthquakes.rejected, (state, { error }) => {
+        console.error("Error while fetching: ", error);
+
         state.status = "failed";
       })
-      .addCase(fetchEarthquakes.fulfilled, (state, action) => {
+      .addCase(fetchEarthquakes.fulfilled, (state, { payload }) => {
         state.status = "idle";
 
-        state.items = action.payload;
+        state.items = payload;
       });
   },
 });

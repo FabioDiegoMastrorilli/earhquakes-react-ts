@@ -9,7 +9,7 @@ export default function Form() {
     <Card className="mb-4">
       <Row>
         {filters.map((filter) => (
-          <Col key={filter.matchKey}>
+          <Col key={filter.matchKey} md={6}>
             <FormGroup className="m-3">
               <Filter {...filter} />
             </FormGroup>

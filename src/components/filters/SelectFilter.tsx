@@ -5,6 +5,7 @@ import { setFilterValue } from "../../slices/earthquakes";
 import { SelectFilterType } from "../../slices/earthquakes.types";
 
 export default function SelectFilter({
+  label,
   matchKey,
   value,
   type,
@@ -24,7 +25,7 @@ export default function SelectFilter({
 
   return (
     <>
-      <Label for={selectId}>{matchKey}</Label>
+      <Label for={selectId}>{label || matchKey}</Label>
 
       <Input
         type="select"
