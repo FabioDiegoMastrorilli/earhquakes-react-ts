@@ -4,7 +4,7 @@ import Form from "./components/Form";
 import List from "./components/Table";
 import { useEffect } from "react";
 import { fetchEarthquakes } from "./slices/earthquakes";
-import { Container } from "reactstrap";
+import { Alert, Container, Spinner } from "reactstrap";
 
 function App() {
   const { status } = useAppSelector((state) => state.earthquakes);
@@ -18,9 +18,15 @@ function App() {
     <Container className="my-4">
       <Form />
 
-      {status === "failed" && <>failed</>}
+      {status === "failed" && (
+        <Alert color="danger">
+          <strong>Error</strong> - Impossible to fetch data.
+        </Alert>
+      )}
 
-      {status === "loading" && <>loading</>}
+      {status === "loading" && (
+        <Spinner className="d-block m-auto my-5" color="primary" />
+      )}
 
       <List />
     </Container>

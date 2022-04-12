@@ -20,9 +20,10 @@ export default function MultiRangeFilter({
   const dispatch = useAppDispatch();
 
   const limits = useMemo(() => {
-    const range = items?.map(
-      (item) => item.properties[matchKey]
-    ) || [Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY];
+    const range = items?.map((item) => item.properties[matchKey]) || [
+      Number.NEGATIVE_INFINITY,
+      Number.POSITIVE_INFINITY,
+    ];
 
     return [Math.min(...range), Math.max(...range)] as [number, number];
   }, [items, matchKey]);

@@ -19,12 +19,8 @@ export default function List() {
     );
   }, [items, filters]);
 
-  if(!items) {
+  if (!items) {
     return null;
-  }
-
-  if(!items.length) {
-    return <>no results found</>
   }
 
   return (
@@ -40,8 +36,8 @@ export default function List() {
         </thead>
 
         <tbody>
-          {filteredItems.length 
-            ? filteredItems.map((item) => (
+          {filteredItems.length ? (
+            filteredItems.map((item) => (
               <tr key={item.id}>
                 <th scope="row">{item.id}</th>
                 <td>{item.properties.place}</td>
@@ -49,14 +45,13 @@ export default function List() {
                 <td className="text-end">{item.properties.magType}</td>
               </tr>
             ))
-          : (
+          ) : (
             <tr>
               <td className="text-center p-4" colSpan={4}>
                 No results were found
               </td>
             </tr>
-          )
-          }
+          )}
         </tbody>
       </Table>
     </Card>

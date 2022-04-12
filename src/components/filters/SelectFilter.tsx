@@ -15,14 +15,12 @@ export default function SelectFilter({
   const options = useMemo(() => {
     const optionsSet = new Set<string>();
 
-    items?.forEach((item) =>
-      optionsSet.add(item.properties[matchKey])
-    );
+    items?.forEach((item) => optionsSet.add(item.properties[matchKey]));
 
     return Array.from(optionsSet);
   }, [items, matchKey]);
 
-  const selectId = `${matchKey}`
+  const selectId = `${matchKey}-filter-select`;
 
   return (
     <>

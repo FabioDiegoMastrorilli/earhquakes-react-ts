@@ -1,5 +1,6 @@
 {
-  "name": "mr-mrs-smith",
+  "author": "Fabio D. Mastrorilli",
+  "name": "earthquakes",
   "version": "0.1.0",
   "private": true,
   "proxy": "https://earthquake.usgs.gov",
