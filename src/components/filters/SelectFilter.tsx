@@ -1,6 +1,7 @@
 import { useMemo } from "react";
+import { Input, Label } from "reactstrap";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { earthquakesSlice, setFilterValue } from "../../slices/earthquakes";
+import { setFilterValue } from "../../slices/earthquakes";
 import { SelectFilterType } from "../../slices/earthquakes.types";
 
 export default function SelectFilter({
@@ -8,24 +9,27 @@ export default function SelectFilter({
   value,
   type,
 }: SelectFilterType) {
-  const { earthquakes } = useAppSelector((state) => state.earthquakes);
+  const { items } = useAppSelector((state) => state.earthquakes);
   const dispatch = useAppDispatch();
 
   const options = useMemo(() => {
     const optionsSet = new Set<string>();
 
-    earthquakes?.forEach((earthquake) =>
-      optionsSet.add(earthquake.properties[matchKey])
+    items?.forEach((item) =>
+      optionsSet.add(item.properties[matchKey])
     );
 
     return Array.from(optionsSet);
-  }, [earthquakes, matchKey]);
+  }, [items, matchKey]);
+
+  const selectId = `${matchKey}`
 
   return (
     <>
-      <label>{matchKey}</label>
+      <Label for={selectId}>{matchKey}</Label>
 
-      <select
+      <Input
+        type="select"
         value={value || ""}
         onChange={({ target }) => {
           dispatch(setFilterValue({ matchKey, type, value: target.value }));
@@ -38,7 +42,7 @@ export default function SelectFilter({
             {option}
           </option>
         ))}
-      </select>
+      </Input>
     </>
   );
 }

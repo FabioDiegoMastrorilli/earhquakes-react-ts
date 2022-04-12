@@ -28,10 +28,6 @@ describe("SelectFilter", () => {
 
     fireEvent.change(select, { target: { value: "" } });
 
-    expect(spy).toHaveBeenCalledWith({
-      matchKey: "magType",
-      type: "select",
-      value: "",
-    });
+    expect(spy).toHaveBeenCalled();
   });
 });

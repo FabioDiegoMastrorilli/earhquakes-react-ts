@@ -3,7 +3,7 @@ import { getData } from "../utilities/earthquakesAPI";
 import { EarthquakesStateType, FilterType } from "./earthquakes.types";
 
 export const initialState: EarthquakesStateType = {
-  earthquakes: null,
+  items: null,
   filters: [
     {
       type: "multiRange",
@@ -50,7 +50,7 @@ export const earthquakesSlice = createSlice({
       .addCase(fetchEarthquakes.fulfilled, (state, action) => {
         state.status = "idle";
 
-        state.earthquakes = action.payload;
+        state.items = action.payload;
       });
   },
 });

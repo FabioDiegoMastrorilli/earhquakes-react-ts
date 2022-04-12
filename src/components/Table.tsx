@@ -1,44 +1,64 @@
 import { useMemo } from "react";
+import { Card, Table } from "reactstrap";
 import { useAppSelector } from "../app/hooks";
 import { isItemVisible } from "../utilities/filters";
 
 export default function List() {
-  const { filters, earthquakes } = useAppSelector((state) => state.earthquakes);
+  const { filters, items } = useAppSelector((state) => state.earthquakes);
 
-  const filteredEarthquakes = useMemo(() => {
+  const filteredItems = useMemo(() => {
     return (
-      earthquakes?.filter((earthquake) => {
+      items?.filter((item) => {
         for (const filter of filters) {
-          if (!isItemVisible(filter, earthquake)) {
+          if (!isItemVisible(filter, item)) {
             return false;
           }
         }
         return true;
       }) || []
     );
-  }, [earthquakes, filters]);
+  }, [items, filters]);
+
+  if(!items) {
+    return null;
+  }
+
+  if(!items.length) {
+    return <>no results found</>
+  }
 
   return (
-    <table aria-label="simple table">
-      <thead>
-        <tr>
-          <td>id</td>
-          <td>place</td>
-          <td>mag</td>
-          <td>magType</td>
-        </tr>
-      </thead>
-
-      <tbody>
-        {filteredEarthquakes?.map((item) => (
-          <tr key={item.id}>
-            <th scope="row">{item.id}</th>
-            <td>{item.properties.place}</td>
-            <td>{item.properties.mag}</td>
-            <td>{item.properties.magType}</td>
+    <Card>
+      <Table hover responsive striped className="mb-0">
+        <thead>
+          <tr>
+            <td>ID</td>
+            <td>Place</td>
+            <td>Mag</td>
+            <td className="text-end">MagType</td>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          {filteredItems.length 
+            ? filteredItems.map((item) => (
+              <tr key={item.id}>
+                <th scope="row">{item.id}</th>
+                <td>{item.properties.place}</td>
+                <td>{item.properties.mag}</td>
+                <td className="text-end">{item.properties.magType}</td>
+              </tr>
+            ))
+          : (
+            <tr>
+              <td className="text-center p-4" colSpan={4}>
+                No results were found
+              </td>
+            </tr>
+          )
+          }
+        </tbody>
+      </Table>
+    </Card>
   );
 }

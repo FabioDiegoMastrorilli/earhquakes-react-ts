@@ -62,7 +62,7 @@ export type SelectFilterType = {
 export type FilterType = SelectFilterType | MultiRangeFilterType;
 
 export interface EarthquakesStateType {
-  earthquakes: EarthquakeType[] | null;
+  items: EarthquakeType[] | null;
   status: "idle" | "loading" | "failed";
   filters: FilterType[];
 }

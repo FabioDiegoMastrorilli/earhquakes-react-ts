@@ -5,32 +5,38 @@ import {
   MultiRangeFilterValueType,
 } from "../../slices/earthquakes.types";
 import Slider from "rc-slider";
-
-import "rc-slider/assets/index.css";
 import { setFilterValue } from "../../slices/earthquakes";
 import { getDomainValueFromPercentage } from "../../utilities/filters";
+import { Label } from "reactstrap";
+
+import "rc-slider/assets/index.css";
 
 export default function MultiRangeFilter({
   matchKey,
   type,
   value,
 }: MultiRangeFilterType) {
-  const { earthquakes } = useAppSelector((state) => state.earthquakes);
+  const { items } = useAppSelector((state) => state.earthquakes);
   const dispatch = useAppDispatch();
 
   const limits = useMemo(() => {
-    const range = earthquakes?.map(
-      (earthquake) => earthquake.properties[matchKey]
+    const range = items?.map(
+      (item) => item.properties[matchKey]
     ) || [Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY];
 
     return [Math.min(...range), Math.max(...range)] as [number, number];
-  }, [earthquakes, matchKey]);
+  }, [items, matchKey]);
+
+  const labelId = `${matchKey}Label`;
 
   return (
     <>
-      <label>{matchKey}</label>
+      <Label id={labelId} className="mb-3 pb-1">
+        {matchKey}
+      </Label>
 
       <Slider
+        ariaLabelledByForHandle={labelId}
         range
         min={0}
         max={100}
