@@ -1,17 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getData } from "../utilities/earthquakesAPI";
-import { EarthquakesState, Filter } from "./earthquakes.types";
+import { EarthquakesStateType, FilterType } from "./earthquakes.types";
 
-const initialState: EarthquakesState = {
+export const initialState: EarthquakesStateType = {
   earthquakes: null,
   filters: [
     {
       type: "multiRange",
       matchKey: "mag",
-    },
-    {
-      type: "multiRange",
-      matchKey: "time",
     },
     {
       type: "select",
@@ -30,12 +26,12 @@ export const earthquakesSlice = createSlice({
   name: "earthquakes",
   initialState,
   reducers: {
-    setFilterValue: (state, { payload }: PayloadAction<Filter>) => {
+    setFilterValue: (state, { payload }: PayloadAction<FilterType>) => {
       const filters = state.filters.map((filter) => ({
         ...filter,
         value:
           filter.matchKey === payload.matchKey ? payload.value : filter.value,
-      })) as Filter[];
+      })) as FilterType[];
 
       return {
         ...state,

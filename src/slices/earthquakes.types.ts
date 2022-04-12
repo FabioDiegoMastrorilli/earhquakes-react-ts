@@ -1,15 +1,10 @@
-export type EarthquakeProps = {
+export type EarthquakePropsType = {
   mag: number;
   place: string;
   time: number;
   updated: number;
-  tz: null;
   url: string;
   detail: string;
-  felt: null;
-  cdi: null;
-  mmi: null;
-  alert: null;
   status: string;
   tsunami: number;
   sig: number;
@@ -27,9 +22,9 @@ export type EarthquakeProps = {
   title: string;
 };
 
-export type Earthquake = {
+export type EarthquakeType = {
   type: string;
-  properties: EarthquakeProps;
+  properties: EarthquakePropsType;
   geometry: {
     type: string;
     coordinates: [number, number, number];
@@ -37,37 +32,37 @@ export type Earthquake = {
   id: string;
 };
 
-export type EarthquakePropsKeys = keyof EarthquakeProps;
+export type EarthquakePropsKeysType = keyof EarthquakePropsType;
 
 export type KeyOfType<Type, Value> = {
   [Key in keyof Type]: Type[Key] extends Value ? Key : never;
 }[keyof Type];
 
-export type MultiRangeFilterValueLimit = {
+export type MultiRangeFilterValueLimitType = {
   absolute: number;
   percentage: number;
 };
 
-export type MultiRangeFilterValue =
-  | [MultiRangeFilterValueLimit, MultiRangeFilterValueLimit]
+export type MultiRangeFilterValueType =
+  | [MultiRangeFilterValueLimitType, MultiRangeFilterValueLimitType]
   | null;
 
-export type MultiRangeFilter = {
+export type MultiRangeFilterType = {
   type: "multiRange";
-  matchKey: KeyOfType<EarthquakeProps, number>;
-  value?: MultiRangeFilterValue;
+  matchKey: KeyOfType<EarthquakePropsType, number>;
+  value?: MultiRangeFilterValueType;
 };
 
-export type SelectFilter = {
+export type SelectFilterType = {
   type: "select";
-  matchKey: KeyOfType<EarthquakeProps, string>;
+  matchKey: KeyOfType<EarthquakePropsType, string>;
   value?: string | null;
 };
 
-export type Filter = SelectFilter | MultiRangeFilter;
+export type FilterType = SelectFilterType | MultiRangeFilterType;
 
-export interface EarthquakesState {
-  earthquakes: Earthquake[] | null;
+export interface EarthquakesStateType {
+  earthquakes: EarthquakeType[] | null;
   status: "idle" | "loading" | "failed";
-  filters: Filter[];
+  filters: FilterType[];
 }

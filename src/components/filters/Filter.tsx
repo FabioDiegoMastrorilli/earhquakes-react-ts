@@ -1,4 +1,4 @@
-import { Filter as FilterType } from "../../slices/earthquakes.types";
+import { FilterType } from "../../slices/earthquakes.types";
 import MultiRangeFilter from "./MultiRangeFilter";
 import SelectFilter from "./SelectFilter";
 

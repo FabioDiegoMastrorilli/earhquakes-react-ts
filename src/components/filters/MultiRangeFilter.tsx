@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
-  MultiRangeFilter as MultiRangeFilterType,
-  MultiRangeFilterValue,
+  MultiRangeFilterType,
+  MultiRangeFilterValueType,
 } from "../../slices/earthquakes.types";
 import Slider from "rc-slider";
 
@@ -28,6 +28,8 @@ export default function MultiRangeFilter({
 
   return (
     <>
+      <label>{matchKey}</label>
+
       <Slider
         range
         min={0}
@@ -37,7 +39,7 @@ export default function MultiRangeFilter({
           value ? value[1].percentage : 100,
         ]}
         onChange={(value) => {
-          const filterValues: MultiRangeFilterValue = Array.isArray(value)
+          const filterValues: MultiRangeFilterValueType = Array.isArray(value)
             ? [
                 {
                   percentage: value[0],

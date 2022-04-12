@@ -1,12 +1,12 @@
-import { Earthquake } from "../slices/earthquakes.types";
+import { EarthquakeType } from "../slices/earthquakes.types";
 
 export const baseURL = "/fdsnws/event/1/query";
 
-type JsonResponse = {
-  features: Earthquake[];
+export type JsonResponse = {
+  features: EarthquakeType[];
 };
 
-const DEFAULT_PAGE_SIZE = 500;
+export const DEFAULT_PAGE_SIZE = 500;
 
 export const defaultQueryParams = {
   eventtype: "earthquake",

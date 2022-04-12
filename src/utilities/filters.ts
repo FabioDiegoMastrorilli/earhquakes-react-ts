@@ -1,13 +1,13 @@
 import {
-  Earthquake,
-  Filter,
-  MultiRangeFilter,
-  SelectFilter,
+  EarthquakeType,
+  FilterType,
+  MultiRangeFilterType,
+  SelectFilterType,
 } from "../slices/earthquakes.types";
 
-function selectFilterEvaluator(
-  { matchKey, value }: SelectFilter,
-  item: Earthquake
+export function selectFilterEvaluator(
+  { matchKey, value }: SelectFilterType,
+  item: EarthquakeType
 ) {
   if (!value) {
     return true;
@@ -26,9 +26,9 @@ export const getDomainValueFromPercentage = (
   return (percentage / 100) * range + min;
 };
 
-function multiRangeFilterEvaluator(
-  { matchKey, value }: MultiRangeFilter,
-  item: Earthquake
+export function multiRangeFilterEvaluator(
+  { matchKey, value }: MultiRangeFilterType,
+  item: EarthquakeType
 ) {
   if (!value) {
     return true;
@@ -40,13 +40,14 @@ function multiRangeFilterEvaluator(
   );
 }
 
-export function isItemVisible(filter: Filter, item: Earthquake): boolean {
+export function isItemVisible(
+  filter: FilterType,
+  item: EarthquakeType
+): boolean {
   switch (filter.type) {
     case "select":
       return selectFilterEvaluator(filter, item);
     case "multiRange":
       return multiRangeFilterEvaluator(filter, item);
-    default:
-      return false;
   }
 }

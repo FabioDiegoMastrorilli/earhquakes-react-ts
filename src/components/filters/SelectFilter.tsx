@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { setFilterValue } from "../../slices/earthquakes";
-import { SelectFilter as SelectFilterType } from "../../slices/earthquakes.types";
+import { earthquakesSlice, setFilterValue } from "../../slices/earthquakes";
+import { SelectFilterType } from "../../slices/earthquakes.types";
 
 export default function SelectFilter({
   matchKey,
@@ -22,19 +22,23 @@ export default function SelectFilter({
   }, [earthquakes, matchKey]);
 
   return (
-    <select
-      value={value || ""}
-      onChange={({ target }) => {
-        dispatch(setFilterValue({ matchKey, type, value: target.value }));
-      }}
-    >
-      <option value=""></option>
+    <>
+      <label>{matchKey}</label>
 
-      {options.map((option) => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
+      <select
+        value={value || ""}
+        onChange={({ target }) => {
+          dispatch(setFilterValue({ matchKey, type, value: target.value }));
+        }}
+      >
+        <option value=""></option>
+
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </>
   );
 }

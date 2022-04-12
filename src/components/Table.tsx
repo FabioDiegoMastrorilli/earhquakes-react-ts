@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import { useAppSelector } from "../app/hooks";
-
 import { isItemVisible } from "../utilities/filters";
 
 export default function List() {
