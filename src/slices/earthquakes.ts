@@ -1,49 +1,44 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getData } from '../features/counter/earthquakesAPI';
-import { EarthquakePropsKeys, EarthquakesState, FilterValue, RemoteFilters } from './earthquakes.types';
+import { getData } from '../utilities/earthquakesAPI';
+import { EarthquakesState, Filter } from './earthquakes.types';
 
 const initialState: EarthquakesState = {
-  items: null,
-  filters: {
-    local: {},
-    remote: {}
-  },
-  page: 0,
+  earthquakes: null,
+  filters: [
+    {
+      type: 'multiRange',
+      matchKey: 'mag',
+    },
+    {
+      type: 'multiRange',
+      matchKey: 'time'
+    },
+    {
+      type: 'select',
+      matchKey: 'magType',
+    }
+  ],
   status: 'idle',
 };
 
 export const fetchEarthquakes = createAsyncThunk(
   'earthquakes/fetchEarthquakes',
-  async ({filters, page}: {
-    filters: RemoteFilters,
-    page: number
-  }) => {
-    return await getData(filters, page);
-  }
+  getData
 );
-
-type SetFilterPayloadType = {
-  name: EarthquakePropsKeys, value: FilterValue, type: 'local'
-} | {
-  name: string, value: FilterValue, type: 'remote'
-}
 
 export const earthquakesSlice = createSlice({
   name: 'earthquakes',
   initialState,
   reducers: {
-    setFilter: (state, {payload: {name, value, type}}: PayloadAction<SetFilterPayloadType>) => {
-      const updatedFilters = {
-          ...state.filters[type],
-          [name]: value
-      }
+    setFilterValue: (state, {payload}: PayloadAction<Filter>) => {
+      const filters = state.filters.map(filter => ({
+        ...filter,
+        value: filter.matchKey === payload.matchKey ? payload.value : filter.value
+      })) as Filter[]
 
       return {
         ...state,
-        filters: {
-          ...state.filters,
-          [type]: updatedFilters
-        }
+        filters
       }
     },
   },
@@ -58,11 +53,11 @@ export const earthquakesSlice = createSlice({
       .addCase(fetchEarthquakes.fulfilled, (state, action) => {
         state.status = 'idle';
         
-        state.items = action.payload;
+        state.earthquakes = action.payload;
       })
   },
 });
 
-export const {setFilter} = earthquakesSlice.actions
+export const {setFilterValue} = earthquakesSlice.actions
 
 export default earthquakesSlice.reducer;

@@ -1,35 +1,32 @@
-import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './app/hooks';
+
 import Form from './components/Form';
-import List from './components/List';
+import List from './components/Table';
+import { useEffect } from 'react';
 import { fetchEarthquakes } from './slices/earthquakes';
 
 function App() {
-  const {filters, items, status, page} = useAppSelector((state) => state.earthquakes);
+  const {status} = useAppSelector((state) => state.earthquakes);
   const dispatch = useAppDispatch();
-  
+
   useEffect(() => {
-    dispatch(fetchEarthquakes({
-      filters: filters.remote,
-      page
-    }))
-  }, [dispatch, page, filters.remote])
+      dispatch(fetchEarthquakes());
+  }, [dispatch])
 
   return (
-    <div className="App">
-        <Form />
+    <>
+          <Form />
 
-        {status === 'failed' && (
-          <>failed</>
-        )}
+          {status === 'failed' && (
+            <>failed</>
+          )}
 
-        {status === 'loading' && (
-          <>loading</>
-        )}
+          {status === 'loading' && (
+            <>loading</>
+          )}
 
-        {<List />}
-        
-    </div>
+          {<List />}
+          </>
   );
 }
 

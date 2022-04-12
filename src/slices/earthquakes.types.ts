@@ -41,25 +41,33 @@ export type Earthquake = {
     id: string
 }
 
-
 export type EarthquakePropsKeys = keyof EarthquakeProps;
 
-export type FilterValue = string | number | null;
+export type KeyOfType<Type, Value> = {[Key in keyof Type]: Type[Key] extends Value ? Key: never}[keyof Type];
 
-export type LocalFilters = {
-    [name in EarthquakePropsKeys]?: FilterValue;
-};
+export type MultiRangeFilterValueLimit = {
+    absolute: number,
+    percentage: number
+}
 
-export type RemoteFilters = {
-    [name: string]: FilterValue;
-};
+export type MultiRangeFilterValue = [MultiRangeFilterValueLimit, MultiRangeFilterValueLimit] | null
+
+export type MultiRangeFilter = {
+    type: 'multiRange',
+    matchKey: KeyOfType<EarthquakeProps, number>,
+    value?: MultiRangeFilterValue
+}
+
+export type SelectFilter = {
+    type: 'select',
+    matchKey: KeyOfType<EarthquakeProps, string>,
+    value?: string | null
+}
+
+export type Filter = SelectFilter | MultiRangeFilter;
 
 export interface EarthquakesState {
-    items: Earthquake[] | null;
+    earthquakes: Earthquake[] | null;
     status: 'idle' | 'loading' | 'failed';
-    filters: {
-        local: LocalFilters,
-        remote: RemoteFilters,
-    },
-    page: number
+    filters: Filter[]
 }
