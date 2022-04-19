@@ -1,5 +1,6 @@
+import { Feature, Geometry } from "geojson";
 import {
-  EarthquakeType,
+  EarthquakePropsType,
   FilterType,
   MultiRangeFilterType,
   SelectFilterType,
@@ -7,7 +8,7 @@ import {
 
 export function selectFilterEvaluator(
   { matchKey, value }: SelectFilterType,
-  item: EarthquakeType
+  item: Feature<Geometry, EarthquakePropsType>
 ) {
   if (!value) {
     return true;
@@ -28,7 +29,7 @@ export const getDomainValueFromPercentage = (
 
 export function multiRangeFilterEvaluator(
   { matchKey, value }: MultiRangeFilterType,
-  item: EarthquakeType
+  item: Feature<Geometry, EarthquakePropsType>
 ) {
   if (!value) {
     return true;
@@ -42,7 +43,7 @@ export function multiRangeFilterEvaluator(
 
 export function isItemVisible(
   filter: FilterType,
-  item: EarthquakeType
+  item: Feature<Geometry, EarthquakePropsType>
 ): boolean {
   switch (filter.type) {
     case "select":

@@ -49,16 +49,18 @@ export const earthquakesSlice = createSlice({
   initialState,
   reducers: {
     setFilterValue: (state, { payload }: PayloadAction<FilterType>) => {
-      const filters = state.filters.map((filter) => ({
-        ...filter,
-        value:
-          filter.matchKey === payload.matchKey ? payload.value : filter.value,
-      })) as FilterType[];
+      const filters = state.filters.map((filter) => {
+        if (filter.matchKey === payload.matchKey) {
+          return {
+            ...filter,
+            value: payload.value,
+          } as FilterType;
+        }
 
-      return {
-        ...state,
-        filters,
-      };
+        return filter;
+      });
+
+      state.filters = filters;
     },
   },
   extraReducers: (builder) => {

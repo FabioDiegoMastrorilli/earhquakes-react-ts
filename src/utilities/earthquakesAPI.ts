@@ -1,10 +1,7 @@
-import { EarthquakeType } from "../slices/earthquakes.types";
+import { FeatureCollection, Geometry } from "geojson";
+import { EarthquakePropsType } from "../slices/earthquakes.types";
 
 export const baseURL = "/fdsnws/event/1/query";
-
-export type JsonResponse = {
-  features: EarthquakeType[];
-};
 
 export const DEFAULT_PAGE_SIZE = 500;
 
@@ -44,7 +41,10 @@ export async function getData() {
     throw new Error(error);
   }
 
-  const parsedResponse = (await response.json()) as JsonResponse;
+  const parsedResponse = (await response.json()) as FeatureCollection<
+    Geometry,
+    EarthquakePropsType
+  >;
 
   return parsedResponse.features;
 }

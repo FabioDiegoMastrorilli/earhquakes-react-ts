@@ -1,3 +1,5 @@
+import { Feature, Geometry } from "geojson";
+import { EarthquakePropsType } from "../slices/earthquakes.types";
 import {
   buildURL,
   getData,
@@ -5,12 +7,11 @@ import {
   baseURL,
   DEFAULT_PAGE_SIZE,
 } from "./earthquakesAPI";
-import { EarthquakeType } from "../slices/earthquakes.types";
 
-const EarthquakeBoilerplate: EarthquakeType = {
+const EarthquakeBoilerplate: Feature<Geometry, EarthquakePropsType> = {
   geometry: {
-    coordinates: [0, 0, 0],
-    type: "",
+    coordinates: [],
+    type: "Point",
   },
   id: "test-id",
   properties: {
@@ -33,10 +34,9 @@ const EarthquakeBoilerplate: EarthquakeType = {
     rms: 0,
     gap: 0,
     magType: "mg",
-    type: "earthquake",
     title: "",
   },
-  type: "",
+  type: "Feature",
 };
 
 describe("earthquakesAPI", () => {

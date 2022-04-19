@@ -1,42 +1,39 @@
-export type EarthquakePropsType = {
-  mag: number;
-  place: string;
-  time: number;
-  updated: number;
-  url: string;
-  detail: string;
-  status: string;
-  tsunami: number;
-  sig: number;
-  net: string;
-  code: string;
-  ids: string;
-  sources: string;
-  types: string;
-  nst: number;
-  dmin: number;
-  rms: number;
-  gap: number;
-  magType: string;
-  type: "earthquake";
-  title: string;
+import { Feature, Geometry } from "geojson";
+
+export type EarthquakeNumericKeys =
+  | "mag"
+  | "time"
+  | "updated"
+  | "tsunami"
+  | "sig"
+  | "nst"
+  | "dmin"
+  | "rms"
+  | "gap";
+
+export type EarthquakeStringKeys =
+  | "place"
+  | "url"
+  | "detail"
+  | "status"
+  | "net"
+  | "code"
+  | "ids"
+  | "sources"
+  | "types"
+  | "magType"
+  | "title";
+
+export type EarthquakePropsNumberType = {
+  readonly [K in EarthquakeNumericKeys]: number;
 };
 
-export type EarthquakeType = {
-  type: string;
-  properties: EarthquakePropsType;
-  geometry: {
-    type: string;
-    coordinates: [number, number, number];
-  };
-  id: string;
+export type EarthquakePropsStringType = {
+  readonly [K in EarthquakeStringKeys]: string;
 };
 
-export type EarthquakePropsKeysType = keyof EarthquakePropsType;
-
-export type KeyOfType<Type, Value> = {
-  [Key in keyof Type]: Type[Key] extends Value ? Key : never;
-}[keyof Type];
+export type EarthquakePropsType = EarthquakePropsNumberType &
+  EarthquakePropsStringType;
 
 export type MultiRangeFilterValueLimitType = {
   absolute: number;
@@ -49,14 +46,14 @@ export type MultiRangeFilterValueType =
 
 export type MultiRangeFilterType = {
   label?: string;
-  matchKey: KeyOfType<EarthquakePropsType, number>;
+  matchKey: EarthquakeNumericKeys;
   type: "multiRange";
   value?: MultiRangeFilterValueType;
 };
 
 export type SelectFilterType = {
   label?: string;
-  matchKey: KeyOfType<EarthquakePropsType, string>;
+  matchKey: EarthquakeStringKeys;
   type: "select";
   value?: string | null;
 };
@@ -64,7 +61,7 @@ export type SelectFilterType = {
 export type FilterType = SelectFilterType | MultiRangeFilterType;
 
 export interface EarthquakesStateType {
-  items: EarthquakeType[] | null;
+  items: Feature<Geometry, EarthquakePropsType>[] | null;
   status: "idle" | "loading" | "failed";
   filters: FilterType[];
 }

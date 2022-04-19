@@ -8,7 +8,5 @@ export default function Filter(props: FilterType) {
       return <MultiRangeFilter {...props} />;
     case "select":
       return <SelectFilter {...props} />;
-    default:
-      return null;
   }
 }

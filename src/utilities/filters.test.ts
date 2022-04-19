@@ -1,14 +1,15 @@
-import { EarthquakeType } from "../slices/earthquakes.types";
+import { Feature, Geometry } from "geojson";
+import { EarthquakePropsType } from "../slices/earthquakes.types";
 import {
   selectFilterEvaluator,
   getDomainValueFromPercentage,
   multiRangeFilterEvaluator,
 } from "./filters";
 
-const Earthquake: EarthquakeType = {
+const Earthquake: Feature<Geometry, EarthquakePropsType> = {
   geometry: {
-    coordinates: [0, 0, 0],
-    type: "",
+    coordinates: [],
+    type: "Point",
   },
   id: "test-id",
   properties: {
@@ -31,10 +32,9 @@ const Earthquake: EarthquakeType = {
     rms: 0,
     gap: 0,
     magType: "mg",
-    type: "earthquake",
     title: "",
   },
-  type: "",
+  type: "Feature",
 };
 
 describe("filters utilities", () => {
