@@ -18,7 +18,7 @@
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
     "prettier": "^2.6.2",
-    "rc-slider": "^10.0.0-alpha.6",
+    "rc-slider": "^10.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-redux": "^7.2.8",
